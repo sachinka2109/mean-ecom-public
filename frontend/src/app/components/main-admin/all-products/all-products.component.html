@@ -1,0 +1,80 @@
+<div class="col-12 col-sm-12 col-md-8 col-lg-4 my-3 p-2">
+  <input class="form-control" type="text" [(ngModel)]="searchText" name="search" placeholder="Search for Products">
+</div>
+<div>
+  <button class="btn btn-success mx-2" routerLink="/main-admin/add">+Add Product</button>
+  <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off" (change)="featureMode = !featureMode">
+  <label class="btn btn-outline-primary mx-2" for="btn-check-outlined">Featured</label>
+</div>
+<ng-container *ngIf="products && products.length >0">
+  <div class="container mt-5 text-center" style="background-color: white;">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Image</th>
+              <th scope="col">Price</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Category</th>
+              <th scope="col">Created At</th>
+              <ng-template #Action>
+                <th scope="col">Action</th>
+              </ng-template>
+              <ng-container *ngIf="featureMode;else Action">
+                <th scope="col">Featured</th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody *ngFor="let productEl of products | filter:searchText">
+            <tr style="vertical-align: middle;">
+              <td style="width: 200px;">{{productEl.title}}</td>
+              <td style="width: 250px;"><img [src]="productEl.imageUrl" alt="" class="pro-image"></td>
+              <td>{{(productEl.discount !==0? productEl.discount : productEl.price )| currency: 'INR'}}</td>
+              <td>{{productEl.quantity}}</td>
+              <td>{{productEl.subCategory}}</td>
+              <td>{{productEl.createdAt | date}}</td>
+              <ng-template #Action>
+                <td>
+                  <button class="btn btn-primary" (click)="onEdit(productEl._id)"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button class="btn btn-danger mx-1" (click)="onDelete(productEl._id)"><i class="fa-solid fa-trash"></i></button>
+                </td>
+              </ng-template>
+              <ng-container *ngIf="featureMode;else Action">
+                <td>
+                  <div class="form-check form-switch d-flex justify-content-center">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      role="switch"
+                      id="flexSwitchCheckDefault"
+                      [checked]="productEl.isFeatured"
+                      (change)="onToggleFeature(productEl._id)"
+                    >
+                  </div>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center my-3">
+    <div class="row">
+      <div class="col">
+        <mat-paginator
+          [length]="totalProducts"
+          [pageSize]="productsPerPage"
+          [pageSizeOptions]="pageSizeOptions"
+          aria-label="Select page"
+          (page)="onChangedPage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+

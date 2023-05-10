@@ -1,0 +1,116 @@
+<a class="btn btn-danger" (click)="onGoBack()"><i class="fa-solid fa-arrow-left"></i>Go back</a>
+
+<ng-container *ngIf="order">
+  <div class="container-fluid mt-3">
+    <div class="row border mx-2 my-2 gy-3 p-2">
+      <h5>Order Details</h5>
+      <div class="col-4">
+        <h6 class="mb-2">Order id</h6>
+        <h6 class="text-muted">{{order._id}}</h6>
+      </div>
+      <div class="col-4">
+        <h6 class="mb-2">Order Date</h6>
+        <h6 class="text-muted">{{order.createdAt | date}}</h6>
+      </div>
+      <div class="col-4">
+        <h6 class="mb-2">Delivery Status</h6>
+        <select class="form-select" #status (change)="onStatusChange(order._id,status.value)">
+          <option value="Pending" [selected]="order.status === 'Pending'">Pending</option>
+          <option value="Processed" [selected]="order.status === 'Processed'">Processed</option>
+          <option value="Shipped" [selected]="order.status  === 'Shipped'">Shipped</option>
+          <option value="Delivered" [selected]="order.status  === 'Delivered'">Delivered</option>
+          <option value="Failed" [selected]="order.status  === 'Failed'">Failed</option>
+        </select>
+      </div>
+      <div class="col-4">
+        <h6 class="mb-2">Order Total Price</h6>
+        <h6 class="text-muted">{{total | currency:'INR'}}</h6>
+      </div>
+    </div>
+
+    <div class="row border mx-2 my-2 p-2">
+      <h5>Order Items</h5>
+      <div class="row text-center">
+        <div class="col">
+          <h6>Name</h6>
+        </div>
+        <div class="col">
+          <h6>Brand</h6>
+        </div>
+        <div class="col">
+          <h6>Category</h6>
+        </div>
+        <div class="col">
+          <h6>Price</h6>
+        </div>
+        <div class="col">
+          <h6>Quantity</h6>
+        </div>
+        <div class="col">
+          <h6>Subtotal</h6>
+        </div>
+        <div class="col">
+          <h6>Status</h6>
+        </div>
+      </div>
+      <ng-container *ngFor="let products of order.products">
+        <div class="row gy-2 text-center align-items-center">
+          <div class="col">
+            <h6 class="text-muted">{{products.product.title}}</h6>
+          </div>
+          <div class="col">
+            <h6 class="text-muted">{{products.product.brand}}</h6>
+          </div>
+          <div class="col">
+            <h6 class="text-muted">{{products.product.subCategory}}</h6>
+          </div>
+          <div class="col">
+            <h6 class="text-muted">{{(products.product.discount !==0? products.product.discount : products.product.price) | currency:'INR'}}</h6>
+          </div>
+          <div class="col">
+            <h6 class="text-muted">{{products.quantity}}</h6>
+          </div>
+          <div class="col">
+            <h6 class="text-muted">{{(products.product.discount !==0? products.product.discount : products.product.price) * products.quantity | currency:'INR'}}</h6>
+          </div>
+          <div class="col">
+            <select class="form-select" #item (change)="onitemStatusChange(order._id,products._id,item.value)">
+              <option value="Pending" [selected]="products.status === 'Pending'">Pending</option>
+              <option value="Processed" [selected]="products.status === 'Processed'">Processed</option>
+              <option value="Shipped" [selected]="products.status  === 'Shipped'">Shipped</option>
+              <option value="Delivered" [selected]="products.status  === 'Delivered'">Delivered</option>
+              <option value="Failed" [selected]="products.status  === 'Failed'">Failed</option>
+            </select>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="row border mx-2 my-2 p-2">
+      <h5>Order Address</h5>
+      <div class="col">
+        <h6 class="mb-2">Order Address</h6>
+        <h6 class="text-muted">
+          {{order.user.userId.address.add1}}
+        </h6>
+        <h6 class="text-muted" >
+          {{order.user.userId.address.add2}}
+        </h6>
+        <h6 class="text-muted" >
+          {{order.user.userId.address.country}},{{order.user.userId.address.state}}
+        </h6>
+        <h6 class="text-muted" >
+          {{order.user.userId.address.city}},{{order.user.userId.address.postalCode}}
+        </h6>
+      </div>
+      <div class="col">
+        <h6 class="mb-2">customer Info</h6>
+        <h6 class="text-muted">{{order.user.userId.name}}</h6>
+      </div>
+      <div class="col">
+        <h6 class="mb-2">Contact Info</h6>
+        <h6 class="text-muted">{{order.user.userId.phone}}</h6>
+      </div>
+    </div>
+  </div>
+</ng-container>

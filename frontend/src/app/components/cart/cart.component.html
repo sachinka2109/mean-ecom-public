@@ -1,0 +1,130 @@
+<ng-template #noProducts>
+  <div class="container border mt-3">
+    <div class="row">
+      <div class="col">
+        <h3 class="p-3">My Cart</h3>
+        <div class="text-center p-4">
+          <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="" class="img-fluid">
+          <h5>Your cart is empty</h5>
+          <h6>Add items to your cart</h6>
+          <button class="btn btn-primary mt-2" routerLink="/shop">Shop Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="cart.length > 0;else noProducts">
+  <div class="container-fluid my-2">
+    <div class="card">
+      <div class="row text-center mx-1">
+        <div class="col">
+          Product Details
+        </div>
+        <div class="col">
+          Price
+        </div>
+        <div class="col d-none d-md-block d-lg-block">
+          Quantity
+        </div>
+        <div class="col d-none d-md-block d-lg-block">
+          Total
+        </div>
+        <div class="col d-none d-md-block d-lg-block">
+          Action
+        </div>
+      </div>
+      <hr class="divider">
+      <div *ngFor="let product of cart;let i = index">
+        <div class="row text-center align-items-center mx-1">
+          <div class="col">
+            <div class="d-flex flex-column align-items-center">
+              <img [src]="product.productId.imageUrl" alt="" class="img-fluid shadow bg-white rounded">
+              <span class="pro-title text-muted">brand:{{product.productId.brand}}</span>
+              <span class="pro-title">{{product.productId.title}}</span>
+            </div>
+          </div>
+          <div class="col">
+            {{(product.productId.discount !==0? product.productId.discount : product.productId.price) | currency:'INR'}}
+          </div>
+          <div class="col d-none d-md-block d-lg-block">
+            <div class="d-inline-flex justify-content-center">
+              <button class="btn btn-sm btn-light" (click)="dec(product.productId._id,product.quantity)" [disabled]="product.quantity==1"><i class="fa-solid fa-minus"></i></button>
+              <span class="px-2 py-2">{{product.quantity}}</span>
+              <button class="btn btn-sm btn-light" (click)="inc(product.productId._id,product.quantity)" [disabled]="product.quantity == product.productId.quantity"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="d-block d-md-none">
+            <div class="row text-center align-items-center mx-1">
+              <div class="col">
+                <button class="btn btn-sm btn-light" (click)="dec(product.productId._id,product.quantity)" [disabled]="product.quantity==1"><i class="fa-solid fa-minus"></i></button>
+                <span class="px-2 py-2">{{product.quantity}}</span>
+                <button class="btn btn-sm btn-light" (click)="inc(product.productId._id,product.quantity)" [disabled]="product.quantity == product.productId.quantity"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <div class="col">
+                <button class="btn btn-danger" (click)="onDeleteCartItem(product.productId._id)" ><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="col d-none d-md-block d-lg-block">
+            {{(product.productId.discount !==0? product.productId.discount : product.productId.price) * product.quantity | currency: 'INR'}}
+          </div>
+          <div class="col d-none d-md-block d-lg-block">
+            <button class="btn btn-danger" (click)="onDeleteCartItem(product.productId._id)" ><i class="fas fa-trash-alt"></i></button>
+          </div>
+          <div class="d-md-none d-sm-block">
+            <hr class="divider">
+            <div class="row">
+              <div class="col">
+                <h6>Total</h6>
+              </div>
+              <div class="col" *ngIf="product.productId.discount !== 0">
+                <h6>{{product.productId.discount * product.quantity | currency: 'INR'}}</h6>
+              </div>
+              <div class="col" *ngIf="product.productId.discount === 0">
+                <h6>{{product.productId.price * product.quantity | currency: 'INR'}}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="divider">
+      </div>
+      <div class="row text-center align-items-center mb-3 mx-1 flex-nowrap">
+        <div class="d-none d-md-flex align-items-center">
+          <div class="col"></div>
+          <div class="col">
+            <button class="btn btn-danger" (click)="onEmptyCart()">Empty Cart</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary" routerLink="/shop/products">Shop More</button>
+          </div>
+          <div class="col">
+            <strong class="text-success">Grand Total :{{total | currency:'INR'}}</strong>
+            <span class="btn btn-outline-success" routerLink="/checkout">Checkout</span>
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="d-flex d-md-none justify-content-center align-items-center">
+          <div class="col">
+            <button class="btn btn-sm btn-danger" (click)="onEmptyCart()">Empty Cart</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-sm btn-primary" routerLink="/shop/products">Shop More</button>
+          </div>
+          <div class="col col-xs-3 col-lg-2">
+            <strong class="text-success text-sm">Grand Total :{{total | currency:'INR'}}
+              <span class="btn btn-sm btn-outline-success" routerLink="/checkout">Checkout</span>
+            </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+<!-- <li class="list-group-item">Product Details</li>
+<li class="list-group-item">Price</li>
+<li class="list-group-item">Quantity</li>
+<li class="list-group-item">Total</li>
+<li class="list-group-item">Action</li> -->

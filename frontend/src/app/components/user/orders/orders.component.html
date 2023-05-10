@@ -1,0 +1,78 @@
+<ng-container *ngIf="orders.length > 0;else NoOrders">
+  <div class="container-fluid text-center">
+    <div class="list-group list-group-flush">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h3>Your Orders</h3>
+          <div class="list-group-item mb-3" *ngFor="let order of orders">
+            <div class="d-none d-md-flex align-items-center">
+              <h4 class="text-success m-0 mx-2">Order ID :{{order._id}}</h4>
+              <h6 [ngClass]="{
+                'bg-primary':order.status === 'Pending',
+                'bg-success':order.status === 'Delivered',
+                'bg-warning':order.status === 'Shipped',
+                'bg-danger':order.status === 'Failed',
+                'bg-info':order.status === 'Processed'
+                }"
+                class="p-1 rounded text-light m-0">{{order.status}}</h6>
+              <a class="btn btn-success mx-2 d-none d-md-flex" [routerLink]="['../order-detail/' + order._id]">View Details</a>            </div>
+            <div class="d-flex d-md-none flex-column align-items-center">
+              <h4 class="text-success m-0">Order ID :{{order._id}}</h4>
+              <div class="d-flex align-items-center my-2">
+                <h6 [ngClass]="{
+                  'bg-primary':order.status === 'Pending',
+                  'bg-success':order.status === 'Delivered',
+                  'bg-warning':order.status === 'Shipped',
+                  'bg-danger':order.status === 'Failed',
+                  'bg-info':order.status === 'Processed'
+                  }"
+                  class="p-1 rounded text-light m-0">{{order.status}}</h6>
+                <a class="btn btn-success btn-sm mx-2 d-flex d-md-none" [routerLink]="['../order-detail/' + order._id]">View Details</a>
+              </div>
+            </div>
+            <hr class="divider">
+            <div class="row justify-content-center">
+              <div class="col-12 col-xs-3 col-md-4 col-lg-2" *ngFor="let products of order.products">
+                <div class="card shadow-sm p-3 mb-2 bg-white rounded" [routerLink]="['/shop/product-detail/' + products.product._id]">
+                  <img class="card-image img-fluid" [src]="products.product.imageUrl" [alt]="products.product.title">
+                  <div class="card-body">
+                    <h5 class="card-title">{{products.product.title}}</h5>
+                    <h5 class="text-muted">qty:{{products.quantity}}</h5>
+                    <h6 [ngClass]="{
+                      'bg-primary':products.status === 'Pending',
+                      'bg-success':products.status === 'Delivered',
+                      'bg-warning':products.status === 'Shipped',
+                      'bg-danger':products.status === 'Failed',
+                      'bg-info':products.status === 'Processed'
+                      }"
+                      class="p-1 rounded text-light"
+                    >
+                      {{products.status}}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #NoOrders>
+  <div class="container border mt-3">
+    <div class="row">
+      <div class="col">
+        <h3 class="p-3">Your Orders</h3>
+        <div class="text-center p-4">
+          <img class="img-fluid" src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
+          <h5>You Haven't Placed Any Orders</h5>
+          <h6>Shop Now to Place Orders</h6>
+          <button class="btn btn-primary mt-2" routerLink="/shop">Shop Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

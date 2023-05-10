@@ -1,0 +1,119 @@
+<a class="btn btn-danger" (click)="onGoBack()"><i class="fa-solid fa-arrow-left"></i>Go back</a>
+<div class="container text-center" *ngIf="product">
+  <h4 class="text-success font-weight-bold">{{product.title}}</h4>
+  <!-- <div class="d-flex d-md-none">
+    <p>Rating</p>
+    <mat-icon *ngFor="let icon of maxRatingArray;let index=index"
+    [ngClass]="{checked: productRating > index}"
+    >
+    star
+    </mat-icon>
+    <p>({{product.reviews.length}})</p>
+  </div> -->
+  <hr>
+  <div class="row text-center justify-content-center">
+    <div class="col col-xs-12 col-md-8 col-lg-5">
+      <img [src]="product.imageUrl" class="img-fluid shadow bg-white rounded" [alt]="product.title">
+    </div>
+    <div class="col">
+      <!-- <h3>About</h3> -->
+      <p class="font-weight-bold mt-3">Brand: {{product.brand}}</p>
+      <p class="product-description text-muted font-weight-bold mt-3">{{product.description}}</p>
+      <hr class="divider">
+      <div class="text-center">
+        <mat-icon *ngFor="let icon of maxRatingArray;let index=index"
+        [ngClass]="{checked: productRating > index}"
+        >
+        star
+        </mat-icon>
+        <p class="m-0">({{product.reviews.length}})</p>
+      </div>
+      <div class="d-flex justify-content-center align-items-center mt-3">
+        <div class="row">
+          <div class="col">
+            <ng-container *ngIf="product.discount !==0;else Nodiscount">
+              <div class="d-flex justify-content-center">
+                <div class="card-text text-success mx-2"><h5 class="m-0">{{product.discount | currency:'INR'}}</h5></div>
+                <div class="text-muted"><del class="m-0">{{product.price | currency:'INR'}}</del></div>
+              </div>
+            </ng-container>
+            <ng-template #Nodiscount>
+              <div class="d-flex justify-content-center">
+                <div class="card-text text-success mx-2"><h5 class="m-0">{{product.price | currency:'INR'}}</h5></div>
+              </div>
+            </ng-template>
+            <ng-container *ngIf="product.quantity > 0;else noStocks">
+              <a class="btn btn-danger mt-3" (click)="onAddToCart()"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+            </ng-container>
+            <ng-template #noStocks>
+              <div class="alert alert-danger mt-3">Out Of Stock</div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEW -->
+  <hr class="divider">
+  <div class="container-fluid">
+    <h4>Reviews</h4>
+    <hr class="divider">
+    <ng-container *ngIf="product.reviews.length > 0;else noReview">
+      <div class="list-group list-group-flush" *ngIf="product">
+        <div class="list-group-item" *ngFor="let review of product.reviews">
+          <img [src]="review.owner.picture" alt="" width="75px" class="rounded-circle">
+          <h4 class="font-weight-bold">{{review.owner.name}}</h4>
+          <mat-icon *ngFor="let icon of maxRatingArray;let index = index"
+            [ngClass]='{checked: review.rating > index}'>
+            star
+          </mat-icon>
+          <h5>{{review.title}}</h5>
+          <div class="row">
+            <div class="col-12 review-description">
+              <h6 class="text-muted">{{review.description}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noReview>
+      <h6>No Reviews Provided</h6>
+    </ng-template>
+  </div>
+
+  <form #ratingForm="ngForm" (ngSubmit)="onRatingSubmit()">
+    <div class="card bg-light my-5">
+      <div class="card-body">
+        <h4 class="card-title">Add a review</h4>
+        <hr />
+        <div class="form">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control" ngModel title #title="ngModel" required/>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="5" maxlength="180" name="description"
+            ngModel description #description="ngModel" required></textarea>
+          </div>
+          <label>Rating</label>
+          <br />
+          <mat-icon *ngFor="let icon of maxRatingArray;let index=index"
+            (mouseenter)="HandleMouseEnter(index)"
+            (mouseleave)="HandleMouseLeave()"
+            (click)="Rating(index)"
+            [ngClass]="{checked:selectedStar >index}"
+          >
+          star
+          </mat-icon>
+          <br />
+          <br />
+          <button type="submit" class="btn btn-info" [disabled]="!ratingForm.valid">
+            Post Review
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+

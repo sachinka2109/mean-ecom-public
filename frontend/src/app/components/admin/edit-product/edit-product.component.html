@@ -1,0 +1,141 @@
+
+<form class="form-group m-3" (ngSubmit)="onSubmit()" [formGroup]="addProductForm" enctype="multipart/form-data" accept="application/json">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control mt-1" formControlName="title" id="title">
+    <span class="help-block" *ngIf="!addProductForm.get('title').valid && addProductForm.get('title').touched">
+      <span class="text-danger" *ngIf="addProductForm.get('title').errors['required']">Enter Product Title</span>
+      <!-- <span class="text-danger" *ngIf="addProductForm.get('title').errors['title']">Please Enter a Valid title</span> -->
+    </span>
+  </div>
+  <div class="form-group">
+    <label for="brand">brand</label>
+    <input type="text" class="form-control mt-1" formControlName="brand" id="brand">
+    <span class="help-block" *ngIf="!addProductForm.get('brand').valid && addProductForm.get('brand').touched">
+      <span class="text-danger" *ngIf="addProductForm.get('brand').errors['required']">Enter Product Brand</span>
+      <!-- <span class="text-danger" *ngIf="addProductForm.get('title').errors['title']">Please Enter a Valid title</span> -->
+    </span>
+  </div>
+  <!-- Add ImageUrls -->
+  <!-- <div class="form-group" formArrayName="imageUrl">
+    <div class="form-group" *ngFor="let imageForm of imageUrl.controls;let i = index" [formGroupName]="i">
+      <div class="row">
+        <div class="col-10">
+          <label for="image" *ngIf="i <= 0">ImageUrl</label>
+          <input type="text" class="form-control mt-1" id="image" formControlName="imageUrl">
+        </div>
+        <ng-container *ngIf="i > 0">
+          <div class="col align-self-end mb-1">
+            <button class="btn btn-danger btn-sm mt-1" type="button" (click)="onDeleteImage(i)">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <button class="btn btn-success mt-2" type="button" (click)="addImage()">
+      <i class="fa-solid fa-plus"></i>Add More Images
+    </button>
+  </div> -->
+  <!-- <div class="form-group">
+    <label for="image">ImageUrl</label>
+    <input type="text" class="form-control mt-1" id="image" formControlName="imageUrl" #imagepath>
+    <span class="help-block" *ngIf="!addProductForm.get('imageUrl').valid && addProductForm.get('imageUrl').touched">
+      <span class="text-danger" *ngIf="addProductForm.get('imageUrl').errors['required']">Enter Product imageUrl</span>
+    </span>
+    <img [src]="imagepath.value" alt="" class="img-fluid mt-2">
+  </div> -->
+  <div class="form-group">
+    <label for="imageUrl">Image</label>
+    <input type="file" class="form-control mt-1" id="imageUrl" #imagepath (change)="onImagePicked($event)">
+    <div *ngIf="imagePreview !== '' && imagePreview && addProductForm.get('imageUrl').valid">
+      <img [src]="imagePreview" alt="" class="img-fluid mt-2">
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col">
+      <div class="form-group">
+        <label for="category">Category</label>
+        <!-- <input list="category" name="categories" id="categories" class="form-control mt-1" formControlName="category" autocomplete="off"> -->
+        <ng-select
+        [items]="categoryOptions"
+        [searchable]="true"
+        [addTag]="true"
+        class="form-control mt-1"
+        [dropdownPosition]="'bottom'"
+        [appendTo]="'body'"
+        formControlName="category"
+        >
+        </ng-select>
+        <span class="help-block" *ngIf="!addProductForm.get('category').valid && addProductForm.get('category').touched">
+          <span class="text-danger" *ngIf="addProductForm.get('category').errors['required']">Enter Product Category</span>
+          <!-- <span class="text-danger" *ngIf="addProductForm.get('category').errors['title']">Please Enter a Valid title</span> -->
+        </span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="sub-category">Sub-Category</label>
+        <ng-select
+        [items]="subCategoryOptions"
+        [searchable]="true"
+        [addTag]="true"
+        class="form-control mt-1"
+        [dropdownPosition]="'bottom'"
+        [appendTo]="'body'"
+        formControlName="subCategory"
+        >
+        </ng-select>
+        <span class="help-block" *ngIf="!addProductForm.get('subCategory').valid && addProductForm.get('subCategory').touched">
+          <span class="text-danger" *ngIf="addProductForm.get('subCategory').errors['required']">Enter Product SubCategory</span>
+          <!-- <span class="text-danger" *ngIf="addProductForm.get('subCategory').errors['title']">Please Enter a Valid title</span> -->
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- Add Description -->
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control mt-1" formControlName="description" cols="30" rows="2" id="description"></textarea>
+    <span class="help-block" *ngIf="!addProductForm.get('description').valid && addProductForm.get('description').touched">
+      <span class="text-danger" *ngIf="addProductForm.get('description').errors['required']">Enter Product description</span>
+      <!-- <span class="text-danger" *ngIf="addProductForm.get('subCategory').errors['title']">Please Enter a Valid title</span> -->
+    </span>
+  </div>
+  <div class="row mt-1 align-items-center">
+    <div class="col">
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control mt-1" id="quantity" formControlName="quantity">
+        <span class="help-block" *ngIf="!addProductForm.get('quantity').valid && addProductForm.get('quantity').touched">
+          <span class="text-danger" *ngIf="addProductForm.get('quantity').errors['required']">Enter quantity Of Products</span>
+          <span class="text-danger" *ngIf="addProductForm.get('quantity').errors['min']">Please enter quantity greater than 0</span>
+        </span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control mt-1" formControlName="price" id="price">
+        <span class="help-block" *ngIf="!addProductForm.get('price').valid && addProductForm.get('price').touched">
+          <span class="text-danger" *ngIf="addProductForm.get('price').errors['required']">Enter Product price</span>
+          <span class="text-danger" *ngIf="addProductForm.get('price').errors['min']">Please Enter value above 100</span>
+        </span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="price">Discount <span class="d-none d-md-inline">Price</span></label>
+        <input type="number" class="form-control mt-1" formControlName="discount" id="discount">
+        <span class="help-block" *ngIf="!addProductForm.get('discount').valid && addProductForm.get('discount').touched">
+          <span class="text-danger" *ngIf="addProductForm.get('discount').errors['required']">Enter Discount price <span class="text-info"><i class="fa-solid fa-circle-info mx-1"></i>If no Discount Enter 0</span></span>
+          <span class="text-danger" *ngIf="addProductForm.get('discount').errors['min']">Please Enter value above 100</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- [disabled]="!this.addProductForm.valid" -->
+  <button class="btn btn-outline-success mt-2 mx-1" type="submit" [disabled]="!addProductForm.valid">{{!editMode? 'Add Product' : 'Update Product'}}</button>
+  <button class="btn btn-danger mt-2 mx-2" type="button" (click)="onCancel()">Cancel</button>
+</form>
+

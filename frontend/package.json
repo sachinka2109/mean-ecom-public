@@ -1,0 +1,61 @@
+{
+  "name": "frontend",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^15.2.5",
+    "@angular/cdk": "^15.2.7",
+    "@angular/common": "^15.2.5",
+    "@angular/compiler": "^15.2.5",
+    "@angular/core": "^15.2.5",
+    "@angular/forms": "^15.2.5",
+    "@angular/material": "^15.2.7",
+    "@angular/platform-browser": "^15.2.5",
+    "@angular/platform-browser-dynamic": "^15.2.5",
+    "@angular/router": "^15.2.5",
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "@ng-select/ng-select": "^10.0.4",
+    "@ngneat/hot-toast": "^5.0.1",
+    "@ngneat/overview": "^4.1.0",
+    "@popperjs/core": "^2.11.7",
+    "@stripe/stripe-js": "^1.52.0",
+    "@types/stripe-v3": "^3.1.28",
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.4",
+    "mdb-angular-ui-kit": "^4.1.0",
+    "ng2-search-filter": "^0.5.1",
+    "pluralize": "^8.0.0",
+    "rxjs": "~7.8.0",
+    "save": "^2.9.0",
+    "socket.io-client": "^4.6.1",
+    "stripe": "^12.0.0",
+    "stripe-angular": "^1.9.1",
+    "tslib": "^2.5.0",
+    "zone.js": "~0.13.0"
+  },
+  "devDependencies": {
+    "@angular-builders/custom-webpack": "^15.0.0",
+    "@angular-devkit/build-angular": "^15.2.5",
+    "@angular/cli": "~15.2.5",
+    "@angular/compiler-cli": "^15.2.5",
+    "@angular/localize": "^15.2.5",
+    "@types/jasmine": "~4.3.1",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.1",
+    "karma-chrome-launcher": "~3.1.1",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "^4.8.5"
+  },
+  "browser": {
+    "express": false
+  }
+}

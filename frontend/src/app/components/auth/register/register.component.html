@@ -1,0 +1,64 @@
+<div class="container pt-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item" routerLink="/auth/register" routerLinkActive="active"><a>Register</a></li>
+          <li class="breadcrumb-item" routerLink="/auth/login" routerLinkActive="active"><a class="link-primary">Login</a></li>
+          <li class="breadcrumb-item" routerLink="/auth/address" routerLinkActive="active"><a class="link-primary">Address</a></li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="col-md-6 offset-md-3">
+    <h3 class="text-center">Register</h3>
+    <div class="p-5 shadow p-3 mb-5 bg-light bg-body-tertiary rounded">
+      <div class="mb-3">
+        <label for="fullname" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="fullname" formControlName="name">
+        <span class="help-block" class="text-danger" *ngIf="!registerForm.get('name').valid && registerForm.get('name').touched">
+            Enter Your Full name (First Name, Last Name)
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+        <span class="help-block" *ngIf="!registerForm.get('email').valid && registerForm.get('email').touched">
+          <span class="text-danger" *ngIf="registerForm.get('email').errors['required']">Enter Your Email</span>
+          <span class="text-danger" *ngIf="registerForm.get('email').errors['email']">Please Enter a Valid Email</span>
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input type="tel" class="form-control" id="phone" formControlName="phone" pattern="^((\\+91-?)|0)?[0-9]{10}$">
+        <span class="help-block" *ngIf="!registerForm.get('phone').valid && registerForm.get('phone').touched">
+          <span class="text-danger" *ngIf="registerForm.get('phone').errors['required']">Please Enter Your Mobile Number</span>
+          <span class="text-danger" *ngIf="registerForm.get('phone').errors['pattern']">Please Enter Valid Phone Number</span>
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$">
+        <span class="help-block" *ngIf="!registerForm.get('password').valid && registerForm.get('password').touched">
+          <span class="text-danger" *ngIf="registerForm.get('password').errors['required']">Please Enter your Password</span>
+          <span class="text-danger" *ngIf="registerForm.get('password').errors['pattern']">Password must Contain 8 Letters,one special character,one digit, one lower case,one upper case English letter</span>
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+        <span class="help-block" *ngIf="!registerForm.get('confirmPassword').valid && registerForm.get('confirmPassword').touched">
+          <span class="text-danger" *ngIf="registerForm.get('confirmPassword').errors['required']">Please Enter Same Password</span>
+          <span *ngIf="registerForm.get('confirmPassword').hasError('passwordsDontMatch')">Passwords do not match</span>
+        </span>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Register</button>
+        <p class="pt-3">Already have a account?<button type="button" class="btn btn-link p-0" (click)="onLoginPage()">Login</button></p>
+      </div>
+    </div>
+  </div>
+</form>

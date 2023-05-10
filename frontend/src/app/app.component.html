@@ -1,0 +1,16 @@
+<ng-template #appHeader>
+  <app-header (adminPanel)="onAdminPanel($event)"></app-header>
+</ng-template>
+<ng-container *ngIf="mainAdmin;else appHeader">
+  <app-main-header (userPanel)="onUserPanel($event)"></app-main-header>
+</ng-container>
+
+<div class="text-secondary position-absolute spinner" *ngIf="loading$ | async">
+  <strong>Loading</strong>
+  <div class="spinner-border" role="status" aria-hidden="true"></div>
+</div>
+
+
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>

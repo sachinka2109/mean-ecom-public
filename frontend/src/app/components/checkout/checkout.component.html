@@ -1,0 +1,46 @@
+<ng-container *ngIf="cart.length > 0;else postOrder">
+  <div class="container text-center">
+    <div class="row justify-content-center align-items-center  my-3">
+      <div class="col-12 col-xs-12 col-md-12 col-lg-10">
+        <h3>Order Summary</h3>
+        <div class="list-group">
+          <div class="list-group-item" *ngFor="let item of cart">
+            <div class="row text-center align-items-center">
+              <div class="col">
+                <img [src]="item.productId.imageUrl" alt="" class="img-fluid">
+                <h5 class="title d-xs-block d-md-none">{{item.productId.title}}</h5>
+              </div>
+              <div class="col d-none d-md-block">
+                <h5 class="title">{{item.productId.title}}</h5>
+              </div>
+              <div class="col">
+                <h5>x {{item.quantity}}</h5>
+              </div>
+              <div class="col">
+                <h5 class="">= {{(item.productId.discount !==0? item.productId.discount : item.productId.price) * item.quantity | currency:'INR'}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="list-group-item">
+            <div class="row text-center">
+              <div class="col">
+                <div class="d-flex justify-content-end align-items-center my-2 mx-3">
+                  <h4>Grand Total</h4>
+                  <h4>={{total | currency:'INR'}}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="text-center">
+            <button class="btn btn-primary" (click)="onCheckOut()">Procced to Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #postOrder>
+  <router-outlet></router-outlet>
+</ng-template>

@@ -1,0 +1,48 @@
+:root {
+  --active:#2f2626
+  --hover: #5f4c4c
+  --background: #c5aa6a
+  --color: #4c3c3c
+  --footer :#404040
+}
+
+.navbar {
+  top: 0;
+  width: 100%;
+  z-index: 200;
+}
+
+.navbar-brand {
+  font-size: 1.5rem !important;
+}
+
+.nav-link {
+  font-size: 1.4rem !important;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fa-solid {
+  font-size: 1.4rem;
+}
+
+/* .active {
+
+}
+
+.nav-link:hover {
+
+}
+
+.badge {
+  font-size: 0.6rem;
+}
+
+.search {
+
+}
+
+.search:hover{
+
+} */
+

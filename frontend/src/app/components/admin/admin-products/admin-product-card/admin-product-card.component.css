@@ -1,0 +1,30 @@
+.card {
+  border: none;
+}
+
+.card:hover {
+  /* shadow-sm p-3 mb-5 bg-white rounded */
+  cursor: pointer;
+  box-shadow: none !important;
+  color: lightcoral;
+}
+
+.card-img-top {
+  max-width: 100vw;
+  height: 40vh;
+  object-fit:contain;
+}
+
+.card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}

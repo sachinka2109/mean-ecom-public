@@ -1,0 +1,27 @@
+h6 {
+  margin: 0;
+}
+
+.card :hover {
+  cursor: pointer;
+  box-shadow: 0 !important;
+  transition: 0.3s ease !important;
+}
+
+.card-image {
+  height: 120px;
+  align-self: center;
+  object-fit: contain;
+}
+
+.img-fluid {
+  width: 200px;
+}
+
+.card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

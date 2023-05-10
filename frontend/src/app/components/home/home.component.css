@@ -1,0 +1,58 @@
+h4 {
+  margin: 0;
+}
+
+#carouselExampleCaptions {
+  max-height: 30% !important;
+}
+
+.carousel-item {
+  max-width: 100%;
+  max-height: auto;
+}
+
+.carousel-item img{
+  max-width: 100vw;
+  max-height: 100vh;
+  object-fit: fill;
+}
+
+.new-img {
+  height: 280px;
+  object-fit: contain !important;
+}
+
+.card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card:hover .card-title {
+  color:orange;
+}
+
+.checked {
+  color :orange;
+}
+
+#carouselExampleIndicators2 {
+  transition: 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+  /* Styles for screens with a maximum width of 768px */
+  .new-img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Styles for screens with a maximum width of 480px */
+  .new-img {
+    height: 200px;
+  }
+}

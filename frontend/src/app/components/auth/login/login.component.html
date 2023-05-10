@@ -1,0 +1,66 @@
+<div class="container pt-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item" routerLink="/auth/register" routerLinkActive="active"><a class="link-primary">Register</a></li>
+          <li class="breadcrumb-item" routerLink="/auth/login" routerLinkActive="active"><a>Login</a></li>
+          <li class="breadcrumb-item active" *ngIf="forgetPassword">forgetPassword</li>
+          <li class="breadcrumb-item" routerLink="/auth/address" routerLinkActive="active"><a class="link-primary">Address</a></li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<ng-template #LoginForm>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="col-md-6 offset-md-3">
+      <h3 class="text-center">Login</h3>
+      <div class="p-5 shadow p-3 mb-5 bg-light bg-body-tertiary rounded">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <span class="help-block" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">
+            <span class="text-danger" *ngIf="loginForm.get('email').errors['required']">Enter Your Email</span>
+            <span class="text-danger" *ngIf="loginForm.get('email').errors['email']">Please Enter a Valid Email</span>
+          </span>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password">
+          <span class="help-block" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+            <span class="text-danger" *ngIf="loginForm.get('password').errors['required']">Please Enter your Password</span>
+          </span>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+          <p class="pt-3">Don't have a account?<button type="button" class="btn btn-link p-0" (click)="onRegisterPage()">Register Now</button></p>
+          <p class="pt-3">Don't remember your password?<button type="button" class="btn btn-link p-0" (click)="onForgotPassword()">Forget Password</button></p>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-container *ngIf="forgetPassword;else LoginForm">
+  <form #emailverifyForm="ngForm" (ngSubmit)="emailverifyForm.form.valid && onVerifySubmit()">
+    <div class="form">
+      <div class="my-3 col-md-6 offset-md-3 text-center shadow p-3 mb-5 bg-light bg-body-tertiary rounded">
+        <div class="">
+          <label for="linked-email">Enter Your Email</label>
+          <input type="text" class="form-control" id="email" name="email"
+          ngModel
+          email
+          #email="ngModel"
+          required>
+          <span class="help-block" *ngIf="email.errors && email.touched">
+            <span class="text-danger" *ngIf="email.errors['required']">This field is Required</span>
+          </span>
+        </div>
+        <button class="btn btn-danger mx-1 my-2" type="button" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-primary mx-2 my-2" type="submit">Send</button>
+      </div>
+    </div>
+  </form>
+</ng-container>

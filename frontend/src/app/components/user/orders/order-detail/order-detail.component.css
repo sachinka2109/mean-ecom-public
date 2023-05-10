@@ -1,0 +1,18 @@
+.list-group-item {
+  max-height: 300px;
+}
+
+.img-fluid {
+  width: 150px;
+}
+
+.pro-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.btn-disabled {
+  font-weight: 600;
+}

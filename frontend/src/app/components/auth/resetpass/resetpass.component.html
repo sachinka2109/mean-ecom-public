@@ -1,0 +1,51 @@
+<form #passChangeForm="ngForm" (ngSubmit)="passChangeForm.form.valid && onSubmitPassReset()" [appMatchPassword]="['newpassword', 'confirmnewpass']">
+  <div class="container py-5">
+    <div class="form-group">
+      <div class="row justify-content-center">
+        <div class="col-12 col-xs-12 col-md-8 col-lg-10 shadow p-3 mb-5 bg-light bg-body-tertiary rounded">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-sm btn-outline-danger mb-3" (click)="onCancel()"><i class="fa-solid fa-xmark fa-lg"></i></button>
+          </div>
+          <div class="row text-center align-items-center mt-2">
+            <div class="col-3">
+              <label for="newpassword"><span class="d-none d-lg-inline mx-1">Enter</span>New Password</label>
+            </div>
+            <div class="col">
+              <input type="password" id="newpassword" class="form-control" name="newpassword"
+                ngModel
+                newpassword
+                #newpassword="ngModel"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                required
+              >
+            </div>
+            <span class="help-block" *ngIf="newpassword.errors && newpassword.touched">
+              <span class="text-danger" *ngIf="newpassword.errors['required']">This field is Required</span>
+            </span>
+          </div>
+          <div class="row text-center align-items-center mt-2">
+            <div class="col-3">
+              <label for="confirmnewpass"><span class="d-none d-lg-inline mx-1">Re-Enter</span>Confirm Password</label>
+            </div>
+            <div class="col">
+              <input type="password" id="confirmnewpass" class="form-control" name="confirmnewpass"
+                ngModel
+                confirmnewpass
+                #confirmnewpass="ngModel"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                required
+              >
+            </div>
+            <span class="help-block" *ngIf="confirmnewpass.errors && confirmnewpass.touched">
+              <span class="text-danger" *ngIf="confirmnewpass.errors['required']">This field is Required</span>
+              <span class="text-danger" *ngIf="confirmnewpass.errors['matching']">Passwords do no match</span>
+            </span>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-outline-danger my-2">Reset Password</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,13 @@
+.navbar-brand {
+  font-size: 1.5rem !important;
+}
+
+.nav-link {
+  font-size: 1.4rem !important;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fa-solid {
+  font-size: 1.4rem;
+}

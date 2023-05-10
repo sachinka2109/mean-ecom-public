@@ -1,0 +1,71 @@
+<ng-container>
+  <div class="col-12 col-sm-12 col-md-8 col-lg-4 my-3 p-2">
+    <input class="form-control" type="text" [(ngModel)]="searchText" name="search" placeholder="Search for Users">
+  </div>
+  <div class="container-fluid text-center">
+    <div class="list-group list-group-flush">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h3>All Users</h3>
+          <table class="table" style="background-color: white;">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Seller</th>
+                <th scope="col">Banned</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let user of users | filter:searchText">
+              <tr style="vertical-align: middle;">
+                <td>{{user.name}}</td>
+                <td><a href="mailto:">{{user.email}}</a></td>
+                <td>{{user.phone}}</td>
+                <td>{{user.isSeller === true? 'Yes':'No'}}</td>
+                <td>{{user.banned === true? 'Yes':'No'}}</td>
+                <td>{{user.createdAt | date}}</td>
+                <td>
+                  <button class="btn mx-1" (click)="onMakeAdmin(user._id)" [ngClass]="{'btn-success':!user.admin,'btn-danger':user.admin}"><i class="fa-solid fa-user-tie"></i></button>
+                  <button class="btn btn-danger" (click)="onBanUser(user._id)"><i class="fa-solid fa-ban"></i></button>
+                  <button class="btn btn-danger mx-1" (click)="onDeleteUser(user._id)"><i class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="row">
+      <div class="col">
+        <mat-paginator
+          [length]="totalUsers"
+          [pageSize]="productsPerPage"
+          [pageSizeOptions]="pageSizeOptions"
+          aria-label="Select page"
+          (page)="onChangedPage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #NoOrders>
+  <div class="container border mt-3">
+    <div class="row">
+      <div class="col">
+        <h3 class="p-3">All Orders</h3>
+        <div class="text-center p-4">
+          <img class="img-fluid" src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
+          <h5>No Orders Have been placed</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

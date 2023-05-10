@@ -1,0 +1,45 @@
+.title {
+  font-weight: 600;
+}
+
+.text-success {
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
+.img-fluid {
+  max-width: 400px !important;
+  height: 80vh;
+}
+
+.checked {
+  color: orange;
+}
+
+.unchecked {
+  color: none;
+}
+
+.product-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10;
+  overflow-y: scroll;
+  text-overflow: ellipsis;
+}
+
+mat-icon {
+  cursor:pointer;
+  font-size: 2rem;
+  width: 40px;
+  height: auto;
+}
+
+.list-group {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
+  overflow-y: scroll;
+  text-overflow: ellipsis;
+}
+

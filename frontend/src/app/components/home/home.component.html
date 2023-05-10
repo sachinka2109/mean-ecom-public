@@ -1,0 +1,265 @@
+<section id="home">
+  <!-- Carousel -->
+  <div id="carouselExampleCaptions" class="carousel slide carousel-fade">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+        <img src="../../../assets/carousel-images/freestocks-_3Q3tsJ01nc-unsplash.jpg" class="img-fluid w-100" alt="...">
+        <!-- <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Some representative placeholder content for the first slide.</p>
+        </div> -->
+      </div>
+      <div class="carousel-item">
+        <img src="../../../assets/carousel-images/jacek-dylag-jo8C9bt3uo8-unsplash.jpg" class="img-fluid w-100" alt="...">
+        <!-- <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Some representative placeholder content for the second slide.</p>
+        </div> -->
+      </div>
+      <div class="carousel-item">
+        <img src="../../../assets/carousel-images/omar-prestwich-jLEGurepDco-unsplash.jpg" class="img-fluid w-100" alt="...">
+        <!-- <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Some representative placeholder content for the third slide.</p>
+        </div> -->
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- Carousel End -->
+
+
+  <ng-container *ngIf="todayDealProducts && todayDealProducts.length >0">
+    <section class="pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4 d-flex align-items-center mb-3">
+            <h3>Today's Deal</h3>
+          </div>
+          <div class="col-md-6 col-lg-8 d-none d-md-flex justify-content-end">
+            <mat-paginator
+              [length]="totalTodaysProducts"
+              [pageSizeOptions]="pageSizeOptions"
+              aria-label="Select page"
+              (page)="onTodaysDealPageChange($event)"
+              hidePageSize="true"
+              class="mb-3"
+            >
+            </mat-paginator>
+          </div>
+          <div class="col-12">
+            <div id="todayDealProducts" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col-12 col-md-6 col-lg-3 mb-3" *ngFor="let product of todaysCombined">
+                      <div class="card">
+                        <a [routerLink]="['/shop/product-detail/' + product.products._id]" class="btn">
+                          <img class="new-img img-fluid w-100" alt="100%x280" [src]="product.products.imageUrl">
+                          <div class="card-body">
+                            <h4 class="card-title">{{product.products.title}}</h4>
+                            <div>
+                              <div class="d-flex justify-content-center align-items-center text-center">
+                                <mat-icon *ngFor="let icon of maxRatingArray;let index=index"
+                                  [ngClass]="{checked: product.rating > index}">
+                                  star
+                                </mat-icon>
+                                <p class="m-0 mt-1">({{product.products.reviews.length}})</p>
+                              </div>
+                            </div>
+                            <ng-container *ngIf="product.products.discount !==0;else Nodiscount">
+                              <div class="d-flex justify-content-center mt-2">
+                                <div class="card-text text-success mx-2"><h5 class="m-0">{{product.products.discount | currency:'INR'}}</h5></div>
+                                <div class="text-muted"><del class="m-0">{{product.products.price | currency:'INR'}}</del></div>
+                              </div>
+                            </ng-container>
+                            <ng-template #Nodiscount>
+                              <div class="d-flex justify-content-center mt-2">
+                                <div class="card-text text-success"><h5 class="m-0">{{product.products.price | currency:'INR'}}</h5></div>
+                              </div>
+                            </ng-template>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 d-flex d-md-none justify-content-center mt-5">
+                <mat-paginator
+                  [length]="totalTodaysProducts"
+                  [pageSizeOptions]="pageSizeOptions"
+                  aria-label="Select page"
+                  (page)="onTodaysDealPageChange($event)"
+                  hidePageSize="true"
+                  class="mb-3"
+                >
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+
+
+  <ng-container *ngIf="featuredProducts && featuredProducts.length >0">
+    <section class="pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 d-flex align-items-center">
+              <h3>Featured</h3>
+          </div>
+          <div class="col d-none d-md-flex  justify-content-end">
+              <mat-paginator
+              [length]="totalFeaturedProducts"
+              [pageSizeOptions]="pageSizeOptions"
+              aria-label="Select page"
+              (page)="onFeatureProPageChange($event)"
+              hidePageSize="true" class="mb-3"
+              >
+            </mat-paginator>
+          </div>
+          <div class="col-12">
+            <div id="featuredProducts" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-3 mb-3" *ngFor="let product of FeaturedCombined">
+                      <div class="card">
+                        <a [routerLink]="['/shop/product-detail/' + product.products._id]" class="btn">
+                          <img class="new-img img-fluid w-100" alt="100%x280" [src]="product.products.imageUrl">
+                          <div class="card-body">
+                            <h4 class="card-title">{{product.products.title}}</h4>
+                            <div>
+                              <div class="d-flex justify-content-center align-items-center text-center">
+                                <mat-icon *ngFor="let icon of maxRatingArray;let index=index"
+                                [ngClass]="{checked: product.rating > index}">
+                                  star
+                                </mat-icon>
+                                <p class="m-0 mt-1">({{product.products.reviews.length}})</p>
+                              </div>
+                            </div>
+                            <ng-container *ngIf="product.products.discount !==0;else Nodiscount">
+                              <div class="d-flex justify-content-center mt-2">
+                                <div class="card-text text-success mx-2"><h5 class="m-0">{{product.products.discount | currency:'INR'}}</h5></div>
+                                <div class="text-muted"><del class="m-0">{{product.products.price | currency:'INR'}}</del></div>
+                              </div>
+                            </ng-container>
+                            <ng-template #Nodiscount>
+                              <div class="d-flex justify-content-center mt-2">
+                                <div class="card-text text-success mx-2"><h5 class="m-0">{{product.products.price | currency:'INR'}}</h5></div>
+                              </div>
+                            </ng-template>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col d-flex d-md-none  justify-content-center mt-5">
+                <mat-paginator
+                [length]="totalTodaysProducts"
+                [pageSizeOptions]="pageSizeOptions"
+                aria-label="Select page"
+                (page)="onFeatureProPageChange($event)"
+                hidePageSize="true"
+                class="mb-3"
+                >
+              </mat-paginator>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+
+  <ng-container *ngIf="newproducts  && newproducts.length >0">
+    <section class="pt-5 pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 d-flex align-items-center">
+              <h3>New Arrival</h3>
+          </div>
+          <div class="col d-none d-md-flex justify-content-end">
+              <mat-paginator
+              [length]="totalNewProducts"
+              [pageSizeOptions]="pageSizeOptions"
+              aria-label="Select page"
+              (page)="onNewProdPageChange($event)"
+              hidePageSize="true" class="mb-3"
+              >
+            </mat-paginator>
+          </div>
+          <div class="col-12">
+            <div id="newproducts" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-3 mb-3" *ngFor="let product of newCombined">
+                      <div class="card">
+                        <a [routerLink]="['/shop/product-detail/' + product.products._id]" class="btn">
+                          <img class="new-img img-fluid w-100" alt="100%x280" [src]="product.products.imageUrl">
+                          <div class="card-body">
+                            <h4 class="card-title">{{product.products.title}}</h4>
+                            <div>
+                              <div class="d-flex justify-content-center align-items-center text-center">
+                                <mat-icon *ngFor="let icon of maxRatingArray;let index=index"
+                                [ngClass]="{checked: product.rating > index}">
+                                  star
+                                </mat-icon>
+                                <p class="m-0 mt-1">({{product.products.reviews.length}})</p>
+                              </div>
+                            </div>
+                            <ng-container *ngIf="product.products.discount !==0;else Nodiscount">
+                              <div class="d-flex justify-content-center mt-2">
+                                <div class="card-text text-success mx-2"><h5 class="m-0">{{product.products.discount | currency:'INR'}}</h5></div>
+                                <div class="text-muted"><del class="m-0">{{product.products.price | currency:'INR'}}</del></div>
+                              </div>
+                            </ng-container>
+                            <ng-template #Nodiscount>
+                              <div class="d-flex justify-content-center mt-2">
+                                <div class="card-text text-success"><h5 class="m-0">{{product.products.price | currency:'INR'}}</h5></div>
+                              </div>
+                            </ng-template>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col d-flex d-md-none  justify-content-center mt-5">
+                <mat-paginator
+                  [length]="totalTodaysProducts"
+                  [pageSizeOptions]="pageSizeOptions"
+                  aria-label="Select page"
+                  (page)="onNewProdPageChange($event)"
+                  hidePageSize="true"
+                  class="mb-3"
+                  >
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+
+</section>

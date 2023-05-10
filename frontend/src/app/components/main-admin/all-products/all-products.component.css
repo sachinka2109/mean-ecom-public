@@ -1,0 +1,41 @@
+body {
+  padding: 2rem 0rem;
+}
+
+/* .card {
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  cursor: pointer;
+  box-shadow: none !important;
+  color: orange;
+}
+
+.card-img-top {
+  max-width: 100vw;
+  height: 40vh;
+  object-fit:contain;
+}
+
+.card-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+} */
+
+.pro-image {
+  width: 150px;
+  height: 150px;
+}
+
+td img {
+  object-fit: contain;
+}
+
+.form-switch {
+  font-size: 1.2rem;
+}

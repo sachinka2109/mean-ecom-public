@@ -1,0 +1,29 @@
+.img-fluid {
+  width: 150px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+input.ng-valid.ng-touched {
+  border-color: green;
+}
+
+textarea.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+textarea.ng-valid.ng-touched {
+  border-color: green;
+}
+
+::ng-deep .ng-select {
+  background-color: white; /* Replace with your desired color */
+}
+
+::ng-deep .ng-option {
+  background-color: white; /* Replace with your desired color */
+}
+
+

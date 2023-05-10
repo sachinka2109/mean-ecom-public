@@ -1,0 +1,16 @@
+.breadcrumb-item {
+  cursor: pointer;
+}
+
+.btn-link {
+  vertical-align:baseline !important;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+input.ng-valid.ng-touched {
+  border-color: green;
+}
+
