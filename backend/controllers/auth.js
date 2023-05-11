@@ -59,57 +59,58 @@ exports.postRegister = async (req, res, next) => {
     }
 };
 
-exports.postLogin = async (req, res,next) => {
+exports.postLogin = async (req, res, next) => {
     let email = req.body.email;
     let password = req.body.password;
     try {
-        const user = await User.findOne({email: email})
-        if(!user) {
-            return res.status(404).json({
-                success: false,
-                message: 'User does not exist'
-            })  
-        } 
-        bcrypt.compare(password, user.password,(err, data) => {
-            loadedUser = user;
-            if(err) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'The password is incorrect'
-                })  
-            }
-            const token = jwt.sign(
-                {
-                    email: loadedUser.email,
-                    userId: loadedUser._id.toString()
-                },
-                'secret-token',
-                {expiresIn: '1hr'}
-            );
-            // transport.sendMail({
-            //     to: email,
-            //     from: 'shop@node-complete.com',
-            //     subject: 'Login succeeded!',
-            //     html: '<h1>You have Logged in to E-shop</h1>'
-            // });
-            res.status(200).json({
-                success: true,
-                message: 'Login successful',
-                userId: loadedUser._id.toString(),
-                userName: loadedUser.name,
-                token: token,
-                userSeller: loadedUser.isSeller,
-                userAdmin:loadedUser.admin
-            })
-        })
-    }
-    catch(error) {
-        if(!error.statusCode) {
-            error.statusCode = 500;
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "User does not exist",
+        });
+      }
+  
+      bcrypt.compare(password, user.password, (err, passwordMatch) => {
+        if (err || !passwordMatch) {
+          return res.status(401).json({
+            success: false,
+            message: "The password is incorrect",
+          });
         }
-        next(error);
-    } 
-};
+  
+        const token = jwt.sign(
+          {
+            email: user.email,
+            userId: user._id.toString(),
+          },
+          config.secret,
+          { expiresIn: "1hr" }
+        );
+        // transport.sendMail({
+        //     to: email,
+        //     from: 'shop@node-complete.com',
+        //     subject: 'Login succeeded!',
+        //     html: '<h1>You have Logged in to E-shop</h1>'
+        // });
+        res.status(200).json({
+          success: true,
+          message: "Login successful",
+          userId: user._id.toString(),
+          userName: user.name,
+          token: token,
+          userSeller: user.isSeller,
+          userAdmin: user.admin,
+        });
+      });
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+      }
+      next(error);
+    }
+  };
+
 
 exports.postReset = async(req,res,next) => {
     try{
